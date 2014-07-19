@@ -32,9 +32,9 @@ public class MainActivity extends Activity {
         switch (id) {
             case R.id.action_settings:
                 break;
-            case R.id.action_login:
+            case R.id.action_register:
             {
-                Intent i = new Intent(this, LoginActivity.class);
+                Intent i = new Intent(this, RegisterActivity.class);
                 startActivity(i);
                 finish();
             }
