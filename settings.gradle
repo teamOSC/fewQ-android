@@ -1,1 +1,1 @@
-include ':app', ':android-ibeacon-service'
+include ':app', ':android-ibeacon-service', ':finalApp'
