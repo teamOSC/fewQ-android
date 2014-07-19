@@ -1,1 +1,1 @@
-include ':app', ':CardsUILib'
+include ':app', ':android-ibeacon-service'
