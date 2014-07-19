@@ -388,6 +388,7 @@ public class IBeaconService extends Service {
      	   if (iBeacon != null) {
      		   lastIBeaconDetectionTime = new Date();
      		   trackedBeacons.add(iBeacon);
+
          	   Log.d(TAG, "iBeacon detected :"+iBeacon.getProximityUuid()+" "+iBeacon.getMajor()+" "+iBeacon.getMinor()+" accuracy: "+iBeacon.getAccuracy()+" proximity: "+iBeacon.getProximity());            		   
  
          	   List<Region> matchedRegions = matchingRegions(iBeacon, monitoredRegionState.keySet());

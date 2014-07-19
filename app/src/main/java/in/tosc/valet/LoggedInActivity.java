@@ -7,17 +7,41 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import in.tosc.valet.R;
+import com.radiusnetworks.ibeacon.IBeaconConsumer;
+import com.radiusnetworks.ibeacon.IBeaconManager;
 
-public class LoggedInActivity extends Activity {
+import in.tosc.valet.beacon.IBeaconDetectorService;
+
+public class LoggedInActivity extends Activity implements IBeaconConsumer {
+
+    //private BeaconServiceUtility beaconUtill = null;
+    //private IBeaconManager iBeaconManager = IBeaconManager.getInstanceForApplication(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
+        //beaconUtill = new BeaconServiceUtility(this);
+        //beaconUtill = new BeaconServiceUtility(this);
         startService(new Intent(this, IBeaconDetectorService.class));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //beaconUtill.onStart(iBeaconManager, this);
+    }
+
+    @Override
+    protected void onStop() {
+        //beaconUtill.onStop(iBeaconManager, this);
+        super.onStop();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,6 +63,11 @@ public class LoggedInActivity extends Activity {
     }
 
     public void startTempActivity(View v) {
-        startActivity(new Intent(this, IBeaconDetectedActivity.class));
+        //startActivity(new Intent(this, IBeaconDetectedActivity.class));
+    }
+
+    @Override
+    public void onIBeaconServiceConnect() {
+
     }
 }

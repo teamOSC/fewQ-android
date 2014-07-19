@@ -340,7 +340,7 @@ public class IBeaconManager {
 
 					IBeaconManager manager = iBeaconManager.get();
 					if (manager.rangeNotifier != null) {
-						Log.d(TAG, "Calling ranging notifier on :" + manager.rangeNotifier);
+						//Log.d(TAG, "Calling ranging notifier on :" + manager.rangeNotifier);
 						manager.rangeNotifier.didRangeBeaconsInRegion(
 								iBeaconManager.get().rangingTracker.getIBeacons(), data.getRegion());
 					}

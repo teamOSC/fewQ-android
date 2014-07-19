@@ -129,6 +129,7 @@ public class MainActivity extends FragmentActivity implements
 
         if(prefs.getBoolean("logged_in", false)) {
             startActivity(new Intent(this, LoggedInActivity.class));
+            finish();
         }
 
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
