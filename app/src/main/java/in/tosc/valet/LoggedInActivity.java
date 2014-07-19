@@ -1,9 +1,12 @@
 package in.tosc.valet;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import in.tosc.valet.R;
 
 public class LoggedInActivity extends Activity {
@@ -32,5 +35,9 @@ public class LoggedInActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void startTempActivity(View v) {
+        startActivity(new Intent(this, IBeaconDetectedActivity.class));
     }
 }

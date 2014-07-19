@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         applicationId "in.tosc.valet"
@@ -22,4 +22,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services:5.0.77'
+    compile project(':CardsUILib')
 }
