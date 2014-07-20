@@ -1,6 +1,7 @@
 package in.tosc.valet;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,13 +22,16 @@ import in.tosc.valet.R;
 public class ReviewActivity extends Activity {
 
     String beaconId = null;
+    String json_object = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        beaconId = getIntent().getStringExtra("beacon_id");
+        Intent intent = getIntent();
+        beaconId = intent.getStringExtra("beacon_id");
+        json_object = intent.getStringExtra("json_object");
     }
 
 

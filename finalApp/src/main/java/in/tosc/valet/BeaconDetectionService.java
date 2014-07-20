@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,12 +21,15 @@ import com.radiusnetworks.ibeacon.RangeNotifier;
 import com.radiusnetworks.ibeacon.Region;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -39,7 +43,6 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
     private IBeacon nearestBeacon = null;
     private double leastDist = 6.0;
 
-    boolean beaconDetected = false;
     PendingIntent pi = null;
 
     private String lastUuid = "";
@@ -87,16 +90,51 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
 
             @Override
             public void didExitRegion(Region region) {
+                lastUuid = "";
                 Log.i("TOSC", "didExitRegion");
-                Intent intent = new Intent(BeaconDetectionService.this, ReviewActivity.class);
-                if (nearestBeacon != null) {
-                    intent.putExtra("beacon_id", nearestBeacon.getProximityUuid() + "," +
-                    nearestBeacon.getMajor() + "," + nearestBeacon.getMinor());
-                } else {
-                    intent.putExtra("beacon_id", "1");
-                }
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                new AsyncTask<Void, Void, String>() {
+
+                    @Override
+                    protected String doInBackground(Void... voids) {
+                        HttpClient httpClient = new DefaultHttpClient();
+                        SharedPreferences prefs = getSharedPreferences(RegisterActivity.PREFS_FILE);
+                        String email = prefs.getString(RegisterActivity.PREFS_REG_EMAIL, "omerjerk@gmail.com");
+                        String url = "http://tosc.in:8080/customer_out?email=";
+                        try {
+                            url += URLEncoder.encode(email, "UTF-8");
+                            url += "&beacon_id=";
+                            if (nearestBeacon != null) {
+                                url += URLEncoder.encode(nearestBeacon.getProximityUuid() + "," + nearestBeacon.getMajor() +
+                                        "," + nearestBeacon.getMinor());
+                            } else {
+                                url += "1";
+                            }
+                            HttpGet httpGet = new HttpGet(url);
+                            return EntityUtils.toString(httpClient.execute(httpGet).getEntity());
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        } catch (ClientProtocolException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return "";
+                    }
+
+                    @Override
+                    protected void onPostExecute(String response) {
+                        Intent intent = new Intent(BeaconDetectionService.this, ReviewActivity.class);
+                        intent.putExtra("json_object", response);
+                        if (nearestBeacon != null) {
+                            intent.putExtra("beacon_id", nearestBeacon.getProximityUuid() + "," +
+                                    nearestBeacon.getMajor() + "," + nearestBeacon.getMinor());
+                        } else {
+                            intent.putExtra("beacon_id", "1");
+                        }
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                }.execute();
             }
 
             @Override
