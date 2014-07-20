@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
     public void goToRegisterScreen (View v) {
         Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
+        finish();
     }
 
 

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -127,7 +128,13 @@ public class RegisterActivity extends Activity {
 
                     Intent si = new Intent(getApplicationContext(), BeaconDetectionService.class);
                     startService(si);
-                    Toast.makeText(getBaseContext(), "Successfully registered", Toast.LENGTH_SHORT);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), "Successfully registered", Toast.LENGTH_SHORT);
+                        }
+                    });
+                    return httpResponse.getStatusLine().getStatusCode();
                 }
 
             } catch (IOException e) {
@@ -135,6 +142,19 @@ public class RegisterActivity extends Activity {
             }
 
             return null;
+        }
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            if (integer == 200) {
+                Handler h = new Handler();
+                h.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 3000);
+            }
         }
     }
 
