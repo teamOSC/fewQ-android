@@ -125,6 +125,7 @@ public class RegisterActivity extends Activity {
                     ed.putString(PREFS_REG_EMAIL, s[2]);
                     ed.putString(PREFS_REG_PROFILE, s[3]);
                     ed.putBoolean(PREFS_REG_IS_REGISTERED, true);
+                    ed.apply();
 
                     Intent si = new Intent(getApplicationContext(), BeaconDetectionService.class);
                     startService(si);
