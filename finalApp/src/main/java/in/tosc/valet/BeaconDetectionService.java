@@ -154,7 +154,7 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
                 Bundle data = new Bundle();
                 data.putString("data", response);
                 //JSONArray jsonArray = new JSONArray(response);
-                Intent launchIntent = new Intent(BeaconDetectionService.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                Intent launchIntent = new Intent(BeaconDetectionService.this, TransactionActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 pi = PendingIntent.getActivity(BeaconDetectionService.this, 0,
                         launchIntent, PendingIntent.FLAG_UPDATE_CURRENT, data);
