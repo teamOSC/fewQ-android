@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
@@ -27,6 +28,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -39,6 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import in.tosc.valet.LoggedInActivity;
+import in.tosc.valet.MainActivity;
 import in.tosc.valet.R;
 import in.tosc.valet.Utils;
 
@@ -49,6 +53,7 @@ public class IBeaconDetectorService extends Service implements IBeaconConsumer {
     private static final String TAG = "IBeaconDetectorService";
 
     boolean beaconDetected = false;
+    PendingIntent pi = null;
 
     public IBeaconDetectorService() {
     }
@@ -123,7 +128,7 @@ public class IBeaconDetectorService extends Service implements IBeaconConsumer {
         });
 
         try {
-            iBeaconManager.startMonitoringBeaconsInRegion(new Region("myRangingUniqueId", null, 1, 1));
+            iBeaconManager.startMonitoringBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -167,22 +172,33 @@ public class IBeaconDetectorService extends Service implements IBeaconConsumer {
         @Override
         protected void onPostExecute (String response) {
             Log.d(TAG, "RESULT == " + response);
+            try {
+                Bundle data = new Bundle();
+                data.putString("data", response);
+                JSONArray jsonArray = new JSONArray(response);
+                Intent launchIntent = new Intent(IBeaconDetectorService.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                pi = PendingIntent.getActivity(IBeaconDetectorService.this, 0,
+                        launchIntent, PendingIntent.FLAG_UPDATE_CURRENT, data);
+                generateNotification(IBeaconDetectorService.this, "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
-    private static void generateNotification(Context context, String message) {
+    private void generateNotification(Context context, String message) {
 
-        Intent launchIntent = new Intent(context, LoggedInActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
 
         ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(
                 0,
                 new NotificationCompat.Builder(context).setWhen(System.currentTimeMillis())
                         .setSmallIcon(R.drawable.ic_launcher).setTicker(message)
                         .setContentTitle(context.getString(R.string.app_name)).setContentText(message)
-                        .setContentIntent(PendingIntent.getActivity(context, 0, launchIntent, 0)).setAutoCancel(true)
+                        .setContentIntent(pi).setAutoCancel(true)
                         .build()
         );
-
     }
 }

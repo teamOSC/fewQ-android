@@ -68,6 +68,5 @@ public class LoggedInActivity extends Activity implements IBeaconConsumer {
 
     @Override
     public void onIBeaconServiceConnect() {
-
     }
 }
