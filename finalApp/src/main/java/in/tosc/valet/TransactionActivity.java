@@ -24,26 +24,37 @@ public class TransactionActivity extends Activity {
 
     LayoutInflater mInflater = null;
 
-    LinearLayout parentLayout = null;
+    LinearLayout CouponsParentLayout = null;
+    LinearLayout historyParentLayout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
-        parentLayout = (LinearLayout) findViewById(R.id.coupons_parent);
+        CouponsParentLayout = (LinearLayout) findViewById(R.id.coupons_parent);
+        historyParentLayout = (LinearLayout) findViewById(R.id.history_parent);
         mInflater = LayoutInflater.from(this);
         String response = getIntent().getStringExtra("data");
         try {
             Log.d("omerjerk", "Response  = " + response);
             jsonObject = new JSONObject(response);
-            JSONArray itemsArray = jsonObject.getJSONArray("items");
+            JSONArray couponsArray = jsonObject.getJSONArray("items");
             JSONArray historyArray = jsonObject.getJSONArray("history");
+            for (int i =0; i < historyArray.length(); ++i) {
+                JSONObject mObject = historyArray.getJSONObject(i);
+                LinearLayout historyLayout = (LinearLayout) mInflater.inflate(R.layout.row_history_layout, null);
+                TextView name = (TextView) historyLayout.findViewById(R.id.name);
+                name.setText(mObject.getString("name"));
+                TextView date = (TextView) historyLayout.findViewById(R.id.date);
+                date.setText(mObject.getString("date"));
+                historyParentLayout.addView(historyLayout);
+            }
             String token = jsonObject.getString("token");
             TextView tokenTextView = (TextView) findViewById(R.id.token);
             tokenTextView.setText(token);
-            for (int i = 0; i < itemsArray.length(); ++i) {
-                JSONObject mObject = itemsArray.getJSONObject(i);
+            for (int i = 0; i < couponsArray.length(); ++i) {
+                JSONObject mObject = couponsArray.getJSONObject(i);
                 LinearLayout couponsLayout = (LinearLayout) mInflater.inflate(R.layout.row_coupon_layout, null);
                 ImageView mImageView = (ImageView) couponsLayout.findViewById(R.id.coupon_preview);
                 TextView couponTitle = (TextView) couponsLayout.findViewById(R.id.coupon_title);
@@ -55,7 +66,7 @@ public class TransactionActivity extends Activity {
                 // but for brevity, use the ImageView specific builder...
                 Ion.with(mImageView)
                         .load(mObject.getString("image"));
-                parentLayout.addView(couponsLayout);
+                CouponsParentLayout.addView(couponsLayout);
             }
         } catch (JSONException e) {
             e.printStackTrace();
