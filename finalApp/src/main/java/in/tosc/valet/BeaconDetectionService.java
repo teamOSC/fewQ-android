@@ -39,9 +39,8 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
     private IBeacon nearestBeacon = null;
     private double leastDist = 6.0;
 
+    boolean beaconDetected = false;
     PendingIntent pi = null;
-
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -155,12 +154,12 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
             try {
                 Bundle data = new Bundle();
                 data.putString("data", response);
-                //JSONArray jsonArray = new JSONArray(response);
                 Intent launchIntent = new Intent(BeaconDetectionService.this, TransactionActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                launchIntent.putExtra("data", response);
                 pi = PendingIntent.getActivity(BeaconDetectionService.this, 0,
-                        launchIntent, PendingIntent.FLAG_UPDATE_CURRENT, data);
-                generateNotification(BeaconDetectionService.this, "");
+                        launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                generateNotification(BeaconDetectionService.this, "Welcome to our store!");
             } catch (Exception e) {
                 Log.e("TOSC", "jsonexception in postexecute", e);
             }

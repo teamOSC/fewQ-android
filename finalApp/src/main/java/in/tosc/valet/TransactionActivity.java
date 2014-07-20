@@ -2,16 +2,35 @@ package in.tosc.valet;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import in.tosc.valet.R;
 
 public class TransactionActivity extends Activity {
+
+    private static final String TAG = "TransactionActivity";
+
+    JSONObject jsonObject = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
+
+        String response = getIntent().getStringExtra("data");
+        try {
+            jsonObject = new JSONObject(response);
+            JSONArray itemsArray = jsonObject.getJSONArray("items");
+            JSONArray historyArray = jsonObject.getJSONArray("history");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
