@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/review_input"
         android:layout_marginTop="10dp"
-        android:text="Submit" />
+        android:text="Submit"
+        android:onClick="submitReview" />
 
 </RelativeLayout>
