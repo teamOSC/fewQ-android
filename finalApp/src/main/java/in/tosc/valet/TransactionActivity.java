@@ -2,15 +2,12 @@ package in.tosc.valet;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import in.tosc.valet.R;
 
 public class TransactionActivity extends Activity {
 

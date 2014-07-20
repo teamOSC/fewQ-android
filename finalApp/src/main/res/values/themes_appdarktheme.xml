@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AppDarkTheme" parent="android:Theme.Holo">
+
+    <item name="android:editTextBackground">@drawable/appdarktheme_edit_text_holo_dark</item>
+
+    <item name="android:textColorHighlight">#99e55c27</item>
+    <item name="android:textSelectHandleLeft">@drawable/appdarktheme_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/appdarktheme_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/appdarktheme_text_select_handle_middle</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewAppDarkTheme</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/appdarktheme_btn_check_holo_dark</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/appdarktheme_btn_radio_holo_dark</item>
+
+    <item name="android:buttonStyle">@style/ButtonAppDarkTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonAppDarkTheme</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerAppDarkTheme</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppDarkTheme</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarAppDarkTheme</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarAppDarkTheme</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigAppDarkTheme</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallAppDarkTheme</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleAppDarkTheme</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/appdarktheme_list_selector_holo_dark</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/appdarktheme_activated_background_holo_dark</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/appdarktheme_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>

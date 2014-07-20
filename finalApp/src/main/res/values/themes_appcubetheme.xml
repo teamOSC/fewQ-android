@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AppCubeTheme" parent="@style/_AppCubeTheme"/>
+
+  <style name="_AppCubeTheme" parent="android:Theme.Holo.Light">
+
+    <item name="android:editTextBackground">@drawable/appcubetheme_edit_text_holo_light</item>
+
+
+    <item name="android:textColorHighlight">#997924d3</item>
+    <item name="android:textSelectHandleLeft">@drawable/appcubetheme_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/appcubetheme_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/appcubetheme_text_select_handle_middle</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewAppCubeTheme</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/appcubetheme_btn_radio_holo_light</item>
+
+    <item name="android:buttonStyle">@style/ButtonAppCubeTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonAppCubeTheme</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerAppCubeTheme</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppCubeTheme</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarAppCubeTheme</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarAppCubeTheme</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigAppCubeTheme</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallAppCubeTheme</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleAppCubeTheme</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/appcubetheme_list_selector_holo_light</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/appcubetheme_activated_background_holo_light</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/appcubetheme_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>

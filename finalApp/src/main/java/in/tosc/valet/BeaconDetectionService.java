@@ -25,11 +25,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -92,12 +88,13 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
             public void didExitRegion(Region region) {
                 lastUuid = "";
                 Log.i("TOSC", "didExitRegion");
+
                 new AsyncTask<Void, Void, String>() {
 
                     @Override
                     protected String doInBackground(Void... voids) {
                         HttpClient httpClient = new DefaultHttpClient();
-                        SharedPreferences prefs = getSharedPreferences(RegisterActivity.PREFS_FILE);
+                        SharedPreferences prefs = getSharedPreferences(RegisterActivity.PREFS_FILE, Context.MODE_PRIVATE);
                         String email = prefs.getString(RegisterActivity.PREFS_REG_EMAIL, "omerjerk@gmail.com");
                         String url = "http://tosc.in:8080/customer_out?email=";
                         try {
@@ -135,6 +132,7 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
                         startActivity(intent);
                     }
                 }.execute();
+
             }
 
             @Override
@@ -143,7 +141,8 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
 
             }
         });
-        try {iBeaconManager.startMonitoringBeaconsInRegion(new Region("someId", null, null, null));
+        try {
+            iBeaconManager.startMonitoringBeaconsInRegion(new Region("someId", null, null, null));
         } catch (RemoteException e) {
             e.printStackTrace();
         }

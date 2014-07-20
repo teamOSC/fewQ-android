@@ -34,15 +34,7 @@
         android:id="@+id/review_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ratingBar"
+        android:layout_below="@id/output_text_view"
         android:lines="4"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/review_input"
-        android:layout_marginTop="10dp"
-        android:text="Submit"
-        android:onClick="submitReview" />
 
 </RelativeLayout>
