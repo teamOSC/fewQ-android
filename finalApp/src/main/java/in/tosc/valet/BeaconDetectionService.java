@@ -90,7 +90,8 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
                 Log.i("TOSC", "didExitRegion");
                 Intent intent = new Intent(BeaconDetectionService.this, ReviewActivity.class);
                 if (nearestBeacon != null) {
-                    intent.putExtra("beacon_id", nearestBeacon.getProximityUuid());
+                    intent.putExtra("beacon_id", nearestBeacon.getProximityUuid() + "," +
+                    nearestBeacon.getMajor() + "," + nearestBeacon.getMinor());
                 } else {
                     intent.putExtra("beacon_id", "1");
                 }
