@@ -98,7 +98,7 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
                     @Override
                     protected String doInBackground(Void... voids) {
                         HttpClient httpClient = new DefaultHttpClient();
-                        SharedPreferences prefs = getSharedPreferences(RegisterActivity.PREFS_FILE);
+                        SharedPreferences prefs = getSharedPreferences(RegisterActivity.PREFS_FILE, MODE_PRIVATE);
                         String email = prefs.getString(RegisterActivity.PREFS_REG_EMAIL, "omerjerk@gmail.com");
                         String url = "http://tosc.in:8080/customer_out?email=";
                         try {
