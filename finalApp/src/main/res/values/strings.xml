@@ -8,4 +8,7 @@
     <string name="title_activity_transaction">TransactionActivity</string>
     <string name="title_activity_transaction_complete">TransactionCompleteActivity</string>
 
+    <string name="title_activity_review">Leave your review</string>
+
+
 </resources>
