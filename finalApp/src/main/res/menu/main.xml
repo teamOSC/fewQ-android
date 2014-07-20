@@ -4,7 +4,13 @@
     <item android:id="@+id/action_register"
         android:title="Register"
         android:icon="@android:drawable/ic_menu_agenda"
+        android:showAsAction="ifRoom"
         android:orderInCategory="1"/>
+    <item android:id="@+id/action_startservice"
+        android:title="Start Service"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:showAsAction="never"

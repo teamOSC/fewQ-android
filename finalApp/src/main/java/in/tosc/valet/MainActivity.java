@@ -18,15 +18,13 @@ import com.radiusnetworks.ibeacon.Region;
 import java.util.Collection;
 
 
-public class MainActivity extends Activity implements IBeaconConsumer {
+public class MainActivity extends Activity {
 
-    private IBeaconManager iBeaconManager = IBeaconManager.getInstanceForApplication(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        iBeaconManager.bind(this);
     }
 
 
@@ -53,50 +51,15 @@ public class MainActivity extends Activity implements IBeaconConsumer {
                 finish();
             }
             break;
+            case R.id.action_startservice:
+            {
+                Intent si = new Intent(this, BeaconDetectionService.class);
+                startService(si);
+            }
+            break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onIBeaconServiceConnect() {
-        /*iBeaconManager.setRangeNotifier(new RangeNotifier() {
-            @Override
-            public void didRangeBeaconsInRegion(Collection<IBeacon> iBeacons, Region region) {
-                if (iBeacons.size() > 0) {
-                    Log.i("TOSC", "The first iBeacon I see is about " + iBeacons.iterator().next().getAccuracy() + " meters away.");
-                }
-            }
-        });
 
-        try {
-            iBeaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-        } catch (RemoteException e) {
-        }*/
-        iBeaconManager.setMonitorNotifier(new MonitorNotifier() {
-            @Override
-            public void didEnterRegion(Region region) {
-                Log.i("TOSC", "didEnterRegion");
-
-            }
-
-            @Override
-            public void didExitRegion(Region region) {
-                Log.i("TOSC", "didExitRegion");
-
-            }
-
-            @Override
-            public void didDetermineStateForRegion(int state, Region region) {
-                Log.i("TOSC", "didDetermineStateForRegion");
-
-            }
-        });
-        try {
-            iBeaconManager.startMonitoringBeaconsInRegion(new Region("someId", null, null, null));
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 }

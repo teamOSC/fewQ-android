@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/home/omerjerk/AndroidstudioProjects/Valet/android-ibeacon-service/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="app_name">AndroidIBeaconService</string>
+    <!-- From: file:/home/omerjerk/AndroidstudioProjects/Valet/android-ibeacon-service/src/main/res/values/styles.xml -->
+    <eat-comment />
+
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+</resources>
