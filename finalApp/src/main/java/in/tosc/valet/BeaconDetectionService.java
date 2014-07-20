@@ -16,6 +16,7 @@ import com.radiusnetworks.ibeacon.IBeacon;
 import com.radiusnetworks.ibeacon.IBeaconConsumer;
 import com.radiusnetworks.ibeacon.IBeaconManager;
 import com.radiusnetworks.ibeacon.MonitorNotifier;
+import com.radiusnetworks.ibeacon.RangeNotifier;
 import com.radiusnetworks.ibeacon.Region;
 
 import org.apache.http.HttpResponse;
@@ -29,12 +30,18 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collection;
 
 public class BeaconDetectionService extends Service implements IBeaconConsumer {
     private static final String TAG = "BeaconDetectionService";
     private IBeaconManager iBeaconManager;
 
+    private IBeacon nearestBeacon = null;
+    private double leastDist = 6.0;
+
     PendingIntent pi = null;
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -75,7 +82,6 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
             @Override
             public void didEnterRegion(Region region) {
                 Log.i("TOSC", "didEnterRegion");
-                new NotifyServerTask().execute(new Region[] {region});
             }
 
             @Override
@@ -95,26 +101,48 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+        iBeaconManager.setRangeNotifier(new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<IBeacon> iBeacons, Region region) {
+                for (IBeacon ib : iBeacons) {
+                    if ((ib.getAccuracy() <= leastDist) && (ib.getAccuracy()>0)) {
+                        Log.d ("TOSC", "accuracy is better, attaching new beacon");
+                        leastDist = ib.getAccuracy();
+                        nearestBeacon = ib;
+                    }
+                }
+                if (leastDist <= 4.0) {
+                    (new NotifyServerTask()).execute(nearestBeacon);
+                }
+            }
+        });
+        try {
+            iBeaconManager.startRangingBeaconsInRegion(new Region("someId2", null, null, null));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
-    private class NotifyServerTask extends AsyncTask<Region, Void, String> {
+    private class NotifyServerTask extends AsyncTask<IBeacon, Void, String> {
 
         @Override
-        protected String doInBackground(Region... region) {
+        protected String doInBackground(IBeacon... iBeacons) {
             try {
                 final HttpClient client = new DefaultHttpClient();
                 String url = "http://tosc.in:8080/customer_in?email=";
                 url += URLEncoder.encode("omerjerk@gmail.com");
                 url += "&beacon_id=";
-                url += URLEncoder.encode(region[0].getProximityUuid().toString().toUpperCase()
-                        + "," + region[0].getMajor() + "," + region[0].getMinor(), "UTF-8");
+                Log.d("TOSC", iBeacons[0].getProximityUuid());
+                url += URLEncoder.encode(iBeacons[0].getProximityUuid().toUpperCase()
+                        + "," + iBeacons[0].getMajor() + "," + iBeacons[0].getMinor(), "UTF-8");
                 final HttpGet httpGet = new HttpGet(url);
                 HttpResponse response = client.execute(httpGet);
                 return EntityUtils.toString(response.getEntity());
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                Log.e("TOSC", "UnsupportedEncodingException in doInBackground", e);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("TOSC", "IOException in doInBackground", e);
             }
             return null;
         }
@@ -132,7 +160,7 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
                         launchIntent, PendingIntent.FLAG_UPDATE_CURRENT, data);
                 generateNotification(BeaconDetectionService.this, "");
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.e("TOSC", "jsonexception in postexecute", e);
             }
 
         }
