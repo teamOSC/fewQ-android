@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FinalApp</string>
+    <string name="app_name">fewQ</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_register">RegisterActivity</string>
@@ -9,6 +9,12 @@
     <string name="title_activity_transaction_complete">TransactionCompleteActivity</string>
 
     <string name="title_activity_review">Leave your review</string>
+    <string name="unregistered_main_summary">
+        Introducing a new era where more jobs are done with fewer queues.
+        \n\n
+        Standing in long queues to checkout? Or waiting hours for your service request ticket?
+        Or spending the whole day lining up for paying bills ? Not anymore.
+    </string>
 
 
 </resources>

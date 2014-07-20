@@ -1,6 +1,7 @@
 package in.tosc.valet;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,13 @@ public class RegisterActivity extends Activity {
 
     private Button submitButton;
 
+    public static final String PREFS_FILE = "PREFS_FILE";
+    public static final String PREFS_REG_NAME = "PREFS_REG_NAME";
+    public static final String PREFS_REG_PHONE = "PREFS_REG_PHONE";
+    public static final String PREFS_REG_EMAIL = "PREFS_REG_EMAIL";
+    public static final String PREFS_REG_PROFILE = "PREFS_REG_PROFILE";
+    public static final String PREFS_REG_IS_REGISTERED = "PREFS_REG_IS_REGISTERED";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +57,8 @@ public class RegisterActivity extends Activity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 String[] registerString = new String[4];
                 registerString[0] = nameEdTxt.getText().toString();
                 registerString[1] = phoneEdTxt.getText().toString();
@@ -85,6 +95,15 @@ public class RegisterActivity extends Activity {
             try {
                 HttpResponse httpResponse = httpClient.execute(httppost);
                 Log.d("TOSC", httpResponse.getStatusLine().getStatusCode() + httpResponse.getEntity().toString());
+                if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                    SharedPreferences.Editor ed = getSharedPreferences(PREFS_FILE, MODE_PRIVATE).edit();
+                    ed.putString(PREFS_REG_NAME, s[0]);
+                    ed.putString(PREFS_REG_PHONE, s[1]);
+                    ed.putString(PREFS_REG_EMAIL, s[2]);
+                    ed.putString(PREFS_REG_PROFILE, s[3]);
+                    ed.putBoolean(PREFS_REG_IS_REGISTERED, true);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
