@@ -86,7 +86,9 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
             @Override
             public void didExitRegion(Region region) {
                 Log.i("TOSC", "didExitRegion");
-
+                Intent intent = new Intent(BeaconDetectionService.this, ReviewActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
 
             @Override
