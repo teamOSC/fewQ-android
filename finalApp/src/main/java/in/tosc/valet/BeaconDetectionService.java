@@ -153,13 +153,13 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
             try {
                 Bundle data = new Bundle();
                 data.putString("data", response);
-                JSONArray jsonArray = new JSONArray(response);
+                //JSONArray jsonArray = new JSONArray(response);
                 Intent launchIntent = new Intent(BeaconDetectionService.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 pi = PendingIntent.getActivity(BeaconDetectionService.this, 0,
                         launchIntent, PendingIntent.FLAG_UPDATE_CURRENT, data);
                 generateNotification(BeaconDetectionService.this, "");
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 Log.e("TOSC", "jsonexception in postexecute", e);
             }
 
