@@ -42,6 +42,8 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
     boolean beaconDetected = false;
     PendingIntent pi = null;
 
+    private String lastUuid = "";
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
@@ -88,7 +90,7 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
                 Log.i("TOSC", "didExitRegion");
                 Intent intent = new Intent(BeaconDetectionService.this, ReviewActivity.class);
                 if (nearestBeacon != null) {
-                    intent.putExtra("beacon_id", nearestBeacon.getMinor());
+                    intent.putExtra("beacon_id", nearestBeacon.getProximityUuid());
                 } else {
                     intent.putExtra("beacon_id", "1");
                 }
@@ -118,7 +120,10 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
                     }
                 }
                 if (leastDist <= 4.0) {
-                    (new NotifyServerTask()).execute(nearestBeacon);
+                    if (!lastUuid.equals(nearestBeacon.getProximityUuid())) {
+                        (new NotifyServerTask()).execute(nearestBeacon);
+                        lastUuid = nearestBeacon.getProximityUuid();
+                    }
                 }
             }
         });
