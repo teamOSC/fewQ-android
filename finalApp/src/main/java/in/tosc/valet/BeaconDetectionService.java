@@ -32,28 +32,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collection;
 
-<<<<<<< HEAD:app/src/main/java/in/tosc/valet/beacon/IBeaconDetectorService.java
-import in.tosc.valet.LoggedInActivity;
-import in.tosc.valet.MainActivity;
-import in.tosc.valet.R;
-import in.tosc.valet.Utils;
-=======
 public class BeaconDetectionService extends Service implements IBeaconConsumer {
     private static final String TAG = "BeaconDetectionService";
     private IBeaconManager iBeaconManager;
->>>>>>> 13eb5fea78837ad6cad0e72daaa5623a57fd685c:finalApp/src/main/java/in/tosc/valet/BeaconDetectionService.java
 
     private IBeacon nearestBeacon = null;
     private double leastDist = 6.0;
 
-    PendingIntent pi = null;
-
-
-<<<<<<< HEAD:app/src/main/java/in/tosc/valet/beacon/IBeaconDetectorService.java
     boolean beaconDetected = false;
     PendingIntent pi = null;
-=======
->>>>>>> 13eb5fea78837ad6cad0e72daaa5623a57fd685c:finalApp/src/main/java/in/tosc/valet/BeaconDetectionService.java
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -164,36 +151,20 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
             try {
                 Bundle data = new Bundle();
                 data.putString("data", response);
-<<<<<<< HEAD:app/src/main/java/in/tosc/valet/beacon/IBeaconDetectorService.java
-                JSONArray jsonArray = new JSONArray(response);
-                Intent launchIntent = new Intent(IBeaconDetectorService.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                pi = PendingIntent.getActivity(IBeaconDetectorService.this, 0,
-                        launchIntent, PendingIntent.FLAG_UPDATE_CURRENT, data);
-                generateNotification(IBeaconDetectorService.this, "");
-            } catch (JSONException e) {
-                e.printStackTrace();
-=======
-                //JSONArray jsonArray = new JSONArray(response);
                 Intent launchIntent = new Intent(BeaconDetectionService.this, TransactionActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                launchIntent.putExtra("data", response);
                 pi = PendingIntent.getActivity(BeaconDetectionService.this, 0,
-                        launchIntent, PendingIntent.FLAG_UPDATE_CURRENT, data);
-                generateNotification(BeaconDetectionService.this, "");
+                        launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                generateNotification(BeaconDetectionService.this, "Welcome to our store!");
             } catch (Exception e) {
                 Log.e("TOSC", "jsonexception in postexecute", e);
->>>>>>> 13eb5fea78837ad6cad0e72daaa5623a57fd685c:finalApp/src/main/java/in/tosc/valet/BeaconDetectionService.java
             }
 
         }
     }
 
     private void generateNotification(Context context, String message) {
-<<<<<<< HEAD:app/src/main/java/in/tosc/valet/beacon/IBeaconDetectorService.java
-
-
-=======
->>>>>>> 13eb5fea78837ad6cad0e72daaa5623a57fd685c:finalApp/src/main/java/in/tosc/valet/BeaconDetectionService.java
 
         ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(
                 0,
