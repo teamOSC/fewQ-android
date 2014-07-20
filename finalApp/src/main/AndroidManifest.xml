@@ -44,6 +44,10 @@
             android:name=".TransactionActivity"
             android:label="@string/title_activity_transaction" >
         </activity>
+        <activity
+            android:name=".TransactionCompleteActivity"
+            android:label="@string/title_activity_transaction_complete" >
+        </activity>
     </application>
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
