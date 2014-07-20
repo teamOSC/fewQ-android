@@ -8,11 +8,14 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EncodingUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -32,6 +35,19 @@ public class ReviewActivity extends Activity {
         Intent intent = getIntent();
         beaconId = intent.getStringExtra("beacon_id");
         json_object = intent.getStringExtra("json_object");
+        TextView outputText = (TextView) findViewById(R.id.output_text_view);
+        String outputString = "Congratulations on your purchase of %s dated %s." +
+                "Your credit card statement will be sent to you shortly.";
+        try {
+            JSONObject jsonObject = new JSONObject(json_object);
+            outputString = String.format(outputString, jsonObject.getString("item"),
+                    jsonObject.getString("date"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            outputString = String.format(outputString, "Shoes", "Fri 15th March");
+        }
+        outputText.setText(outputString);
+
     }
 
 
