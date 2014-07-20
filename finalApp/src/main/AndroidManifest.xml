@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.tosc.valet" >
 
-
     <application
+        android:persistent="true"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -18,19 +18,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:parentActivityName=".MainActivity"
             android:name=".RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".MainActivity" >
         </activity>
-        <service android:enabled="true"
+
+        <service
+            android:name="com.radiusnetworks.ibeacon.service.IBeaconService"
+            android:enabled="true"
             android:exported="true"
             android:isolatedProcess="false"
-            android:label="iBeacon"
-            android:name="com.radiusnetworks.ibeacon.service.IBeaconService">
+            android:label="iBeacon" >
         </service>
-
-        <service android:enabled="true"
-            android:name="com.radiusnetworks.ibeacon.IBeaconIntentProcessor">
+        <service
+            android:name="com.radiusnetworks.ibeacon.IBeaconIntentProcessor"
+            android:enabled="true" >
+        </service>
+        <service
+            android:name=".BeaconDetectionService"
+            android:enabled="true"
+            android:exported="true" >
         </service>
     </application>
 
@@ -40,12 +47,10 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <!-- Internet -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- For BLE -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-
-
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
 </manifest>
