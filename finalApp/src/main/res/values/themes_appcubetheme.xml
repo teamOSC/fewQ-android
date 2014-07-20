@@ -9,6 +9,7 @@
 
     <item name="android:editTextBackground">@drawable/appcubetheme_edit_text_holo_light</item>
 
+
     <item name="android:textColorHighlight">#997924d3</item>
     <item name="android:textSelectHandleLeft">@drawable/appcubetheme_text_select_handle_left</item>
     <item name="android:textSelectHandleRight">@drawable/appcubetheme_text_select_handle_right</item>

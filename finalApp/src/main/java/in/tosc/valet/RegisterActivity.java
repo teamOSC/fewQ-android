@@ -1,6 +1,9 @@
 package in.tosc.valet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,6 +38,8 @@ public class RegisterActivity extends Activity {
 
     private Button submitButton;
 
+    private Context mContext;
+
     public static final String PREFS_FILE = "PREFS_FILE";
     public static final String PREFS_REG_NAME = "PREFS_REG_NAME";
     public static final String PREFS_REG_PHONE = "PREFS_REG_PHONE";
@@ -46,6 +51,8 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mContext = this;
 
         nameEdTxt = (EditText) findViewById(R.id.register_field_name);
         phoneEdTxt = (EditText) findViewById(R.id.register_field_phone);
@@ -64,8 +71,22 @@ public class RegisterActivity extends Activity {
                 registerString[1] = phoneEdTxt.getText().toString();
                 registerString[2] = emailEdTxt.getText().toString();
                 registerString[3] = addressEdTxt.getText().toString();
-                RegisterTask registerTask = new RegisterTask();
-                registerTask.execute(registerString);
+
+                if ((registerString[0].length()<1)
+                        || (registerString[1].length()<1)
+                        || (registerString[2].length()<1)
+                        || (registerString[3].length()<1)) {
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("Argh you cheat !!!")
+                            .setMessage("Jeez, you can't get away without" +
+                                    " properly filling in your details." +
+                                    " We need your details at least once to" +
+                                    " be able to help you avoid queues in future.").show();
+                } else {
+                    RegisterTask registerTask = new RegisterTask();
+                    registerTask.execute(registerString);
+                }
+
             }
         });
 
@@ -102,6 +123,9 @@ public class RegisterActivity extends Activity {
                     ed.putString(PREFS_REG_EMAIL, s[2]);
                     ed.putString(PREFS_REG_PROFILE, s[3]);
                     ed.putBoolean(PREFS_REG_IS_REGISTERED, true);
+
+                    Intent si = new Intent(getApplicationContext(), BeaconDetectionService.class);
+                    startService(si);
                 }
 
             } catch (IOException e) {
