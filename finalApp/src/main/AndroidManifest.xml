@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:persistent="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppCubeTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
