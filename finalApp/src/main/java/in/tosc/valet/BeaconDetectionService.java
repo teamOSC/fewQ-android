@@ -180,10 +180,10 @@ public class BeaconDetectionService extends Service implements IBeaconConsumer {
                 final HttpClient client = new DefaultHttpClient();
                 String url = "http://tosc.in:8080/customer_in?email=";
                 url += URLEncoder.encode("omerjerk@gmail.com");
-                url += "&beacon_id=";
-                Log.d("TOSC", iBeacons[0].getProximityUuid());
-                url += URLEncoder.encode(iBeacons[0].getProximityUuid().toUpperCase()
-                        + "," + iBeacons[0].getMajor() + "," + iBeacons[0].getMinor(), "UTF-8");
+                //url += "&beacon_id=";
+                //Log.d("TOSC", iBeacons[0].getProximityUuid());
+                //url += URLEncoder.encode(iBeacons[0].getProximityUuid().toUpperCase()
+                //        + "," + iBeacons[0].getMajor() + "," + iBeacons[0].getMinor(), "UTF-8");
                 final HttpGet httpGet = new HttpGet(url);
                 HttpResponse response = client.execute(httpGet);
                 return EntityUtils.toString(response.getEntity());
