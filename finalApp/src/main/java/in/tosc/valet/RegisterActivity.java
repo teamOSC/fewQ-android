@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -126,6 +127,7 @@ public class RegisterActivity extends Activity {
 
                     Intent si = new Intent(getApplicationContext(), BeaconDetectionService.class);
                     startService(si);
+                    Toast.makeText(getBaseContext(), "Successfully registered", Toast.LENGTH_SHORT);
                 }
 
             } catch (IOException e) {
